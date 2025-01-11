@@ -11,7 +11,7 @@ At the end of this topic, you should be able to:
 
 ## Content 
 
-This repository only has a single object, one `in class` Quarto document that reviews the following items that I am assuming incoming students already know with links to resources for review.  The topics include:
+This repository only has a single object, one `in class` [Quarto document](https://dyerlabteaching.github.io/R-Ecosystem-Review/in-class.html) that reviews the following items that I am assuming incoming students already know with links to resources for review.  The topics include:
 
 - Up to date `R` installation.  
 - Recent `RStudio` installation. 
