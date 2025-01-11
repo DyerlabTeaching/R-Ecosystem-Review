@@ -1,6 +1,5 @@
 # R Ecosystem Review
 
-
 ## Impetus
 
 This repository has a single 'in class' activity—reviewing the necessary `R` features that all students need.

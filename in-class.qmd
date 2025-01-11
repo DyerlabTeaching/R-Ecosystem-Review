@@ -11,7 +11,7 @@ format:
     code-tools: true
     toc: false
 ---
-
+![](media/GeneratedImage.png)
 
 # The `R` Ecosystem
 
