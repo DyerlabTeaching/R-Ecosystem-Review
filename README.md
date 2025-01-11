@@ -1,5 +1,6 @@
-![](https://dyerlabteaching.github.io/R-Ecosystem-Review/media/GeneratedImage.png)
 # R Ecosystem Review
+
+![](https://dyerlabteaching.github.io/R-Ecosystem-Review/media/GeneratedImage.png)
 
 ## Impetus
 
