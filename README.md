@@ -1,43 +1,25 @@
-# Topic Title
+# R Ecosystem Review
 
 
 ## Impetus
 
-This is a description of the basic template file for a course component repository
+This repository has a single 'in class' activity—reviewing the necessary `R` features that all students need.
 
 ## Student Learning Objectives
 
 At the end of this topic, you should be able to:  
- - *Learning Objective 1* 
- - *Learning Objective 2*
- - *Learning Objective 3* 
+ - Review all the basic `R` skills necessary for a graduate-level course.
 
 ## Content 
 
-This learning topic has several kinds of content associated with it.  These items can be partitioned into when they are most relevant.  
+This repository only has a single object, one `in class` Quarto document that reviews the following items that I am assuming incoming students already know with links to resources for review.  The topics include:
 
-### Prepatory Content
-
-These items are intended to provide everyone a background *foundational* understanding of the topic and should be gone through **prior** to class where we are working on this topic.   
- - [Background Readings](readings.html)
- - [Video Lecture](video.html)
- - [Slides For Video](video_slides.html)
- - [Data Sets](data.html)
- - [Background Assessment Quiz](background-quiz.html)
- - [Longer Background Narrative](narrative.html)
-
-### In-Person Content
-
-This content is intended for in-person activities. In addition to presentation content, these items may include activities for individual work, group project work, reflection activities, and other assessment metrics.
- - [Slides](slides.html)
- - [In Class](in-class.html)
- - [Additional External Resources](in-class_resources.html)
-
-### Assessment Tools
-
-The ability of participants to understand, practice, and demonstrate mastery of a topic can be evaluated using both direct and indirect methods.  These will come in a variety of formats.
-- [Homework Assigmnent](homework.html)
-- [Topic Reflection](reflection.html)
+- Up to date `R` installation.  
+- Recent `RStudio` installation. 
+- Understanding of both `R` scripts and `Quarto` document.  
+- Some familiarity with `tidyverse` data manipulation.  
+- `ggplot2` competencies, and   
+- The abilitiy to work with `knitr::kable` and `kableExtra` libraries.
 
 ## Contact Information
 
