@@ -1,15 +1,6 @@
 ---
 title: "R Ecosystem Review"
-author: 
-  - name: Rodney J. Dyer
-    email: rjdyer@vcu.edu
-    url: https://rodneydyer.com
-abstract:
-    This activity is a quick overview of what you'll need to bring to the table for this course.  I am going to assume that you've had at least an introductionary course in R with some kind of statistical background. Indivdiual sections of this document will highlight the specific skills you'll need, with a code example, and links to my course in [Data Literacy]()
-format: 
-  html:
-    code-tools: true
-    toc: false
+output: html_notebook
 ---
 ![](media/GeneratedImage.png)
 
