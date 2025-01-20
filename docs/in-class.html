@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Rodney J. Dyer">
+
+<title>R Ecosystem Review</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="in-class_files/libs/clipboard/clipboard.min.js"></script>
+<script src="in-class_files/libs/quarto-html/quarto.js"></script>
+<script src="in-class_files/libs/quarto-html/popper.min.js"></script>
+<script src="in-class_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="in-class_files/libs/quarto-html/anchor.min.js"></script>
+<link href="in-class_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="in-class_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="in-class_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="in-class_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="in-class_files/libs/bootstrap/bootstrap-ebb6a2eaaf89c9396bb5b17464154299.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="in-class_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="in-class_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">R Ecosystem Review</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://rodneydyer.com">Rodney J. Dyer</a> <a href="mailto:rjdyer@vcu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    This activity is a quick overview of what you’ll need to bring to the table for this course. I am going to assume that you’ve had at least an introductionary course in R with some kind of statistical background. Indivdiual sections of this document will highlight the specific skills you’ll need, with a code example, and links to my course in <a href="">Data Literacy</a>
+  </div>
+</div>
+
+
+</header>
+
+
+<p><img src="media/GeneratedImage.png" class="img-fluid"></p>
+<section id="the-r-ecosystem" class="level1">
+<h1>The <code>R</code> Ecosystem</h1>
+<p>This course will use <code>R</code> for model exploration, data analysis, and writing results. If you do not have <code>R</code> on your laptop, please download it from <a href="https://cran.r-project.org">here</a> and install the appropriate version for your platform.</p>
+<section id="r-version" class="level3">
+<h3 class="anchored" data-anchor-id="r-version">R Version</h3>
+<div class="callout-info">
+<p>I am currently using R version 4.4.2 for this document.</p>
+</div>
+<p>To check the version of your <code>R</code> instance, type:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               _                           
+platform       aarch64-apple-darwin20      
+arch           aarch64                     
+os             darwin20                    
+system         aarch64, darwin20           
+status                                     
+major          4                           
+minor          4.2                         
+year           2024                        
+month          10                          
+day            31                          
+svn rev        87279                       
+language       R                           
+version.string R version 4.4.2 (2024-10-31)
+nickname       Pile of Leaves              </code></pre>
+</div>
+</div>
+<p>If the major version of your install is 4, you should be fine. If it is earlier, you should upgrade. If the first number in the minor version is lower than this, you should also consider upgrading. The minor “dot version” is not as important.</p>
+<section id="upgrading-from-a-previous-version" class="level4">
+<h4 class="anchored" data-anchor-id="upgrading-from-a-previous-version">Upgrading from a Previous Version</h4>
+<p><code>R</code> stores all the libraries in a version-specific folder structure. <em>Before</em> you upgrade, you may want to make a backup of which sets of libraries/packages you have installed already so that when you upgrade, you can automatically reinstall the packages into the new system. Here is how you’d do that.</p>
+<ol type="1">
+<li>Make a record of the packages you already have installed. This takes the list of packages you have, pulls out the names of each package and saves it as an R data file (<code>.rda</code>) on your Desktop. After this, you can close R.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">names</span>( <span class="fu">is.na</span>(pkgs[,<span class="dv">4</span>]))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(pkgs,<span class="at">file=</span><span class="st">'~/Desktop/pkgs.rda'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Download and Install the new version of <code>R</code>.</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are on Windows… I’m sorry, I feel for you. Make sure you install the <code>UCRT</code> package that is in the <code>base</code> install documents. There may be other issues that come up, I am not familiar with this platform but in almost all the workshops I lead, there are Windows issues.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Find the packages you need to install by comparing it to what you had previously and install them all at once.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> <span class="fu">names</span>( <span class="fu">is.na</span>(new_pkgs[,<span class="dv">4</span>]))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"~/Desktop/pkgs.rda"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>to_install <span class="ot">&lt;-</span> <span class="fu">setdiff</span>( pkgs, new_pkgs )</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>( to_install )</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>( <span class="at">ask=</span><span class="cn">FALSE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="updating-your-current-set-of-packages." class="level4">
+<h4 class="anchored" data-anchor-id="updating-your-current-set-of-packages.">Updating your current set of packages.</h4>
+<p>If you just updated <code>R</code>, you can skip this section. If you have not updated your package list in a while, you may want to update any out-of-date packages you may have on your system. Do this when you are not needing to use <code>R</code> for a while, depending upon how much you need to upgrade, it may take a while.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>( <span class="at">ask=</span><span class="cn">FALSE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you do not put the <code>ask=FALSE</code> part in there, you’ll be tethered to the computer because it will ask your permission to install each package one at a time…</p>
+</section>
+</section>
+<section id="rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio">RStudio</h2>
+<p>I am assuming that you are using <a href="https://posit.co">RStudio</a> for this course. If you prefer to use another platform such as <a href="https://jupyter.org">Jupyter Notebooks</a>, <a href="https://code.visualstudio.com">Visual Studio</a>, or other IDE’s, you are on your own. However, this course will require you to produce markdown documents in HTML or DOCX format.</p>
+<p>If you do not have the most recent version of RStudio, please download it from <a href="https://posit.co">here</a></p>
+</section>
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>We are going to use <a href="https://quarto.org">Quarto</a> in this course to make integrate our data analysis, graphical output, report writing. If you have not used <code>quarto</code> before, you will need to download the most recent version. There is a complete discussion of how to start with Quarto on the website. Download the version for your compute platform and choose <code>RStudio</code> (or whatever IDE) you are using. It will set you up.</p>
+</section>
+</section>
+<section id="rstudio-projects" class="level1">
+<h1>RStudio Projects</h1>
+<p><code>RStudio</code> has the concept of a <em>project</em> for code and data organization. I <em>highly recommend</em> that you use a single project for this course. This will co-locate all the data, all the code, and all the markdown that you will be given and that you create for this class. It will also seemlessly handle working directories and all the other crap that befuddles many students. To make a new package, open up <code>RStudio</code> and do the following:</p>
+<ol type="1">
+<li><p>From the <code>File</code> menu, select <code>New Projct</code> <img src="media/New_Project_1.png" class="img-fluid"></p></li>
+<li><p>Select <code>New Directory</code> from the popup dialog. This will create a new folder to put all your materials into.</p></li>
+</ol>
+<p><img src="media/New_Project_2.png" class="img-fluid"></p>
+<ol start="3" type="1">
+<li>Select <code>New Project</code> for this, we are going to create a generic project to put all the course materials into.</li>
+</ol>
+<p><img src="media/New_Project_3.png" class="img-fluid"></p>
+<ol start="4" type="1">
+<li>Create a name for the folder, perhaps select the name of the class or some other designation that works with your file organization system. Also, put it somewhere that will be useable (I had a student recently who only put stuff in the <code>Downloads</code> folder for some reason…).</li>
+</ol>
+<p><img src="media/New_Project_4.png" class="img-fluid"></p>
+<ol start="5" type="1">
+<li>Select <code>Create Project</code>.</li>
+</ol>
+<p>Now, whenever you get a document or data file, <em>put it in this folder</em>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important for me to emphasize this. When you download a data set or markdown document or R script and simply double click on it, it will most likely be in your Downloads folder.</p>
+<p><strong>Move it to the project folder</strong> so it is co-located with all the other stuff for this course. If you do not, some of the code may not work properly and you’ll be hating yourself. (Dyer’s #1 rule, do things now so ‘future self’ does not hate decisions that ‘past self’ made…)</p>
+</div>
+</div>
+<p>More importantly, when <code>RStudio</code> opens, it will default to opening the most recent project (which in all likelihood will be this project).</p>
+</section>
+<section id="markdown" class="level1">
+<h1>Markdown</h1>
+<p>In <code>R</code>, we have two categories of documents that we will be using.</p>
+<section id="r-scripts" class="level2">
+<h2 class="anchored" data-anchor-id="r-scripts"><code>R</code> Scripts</h2>
+<p>You can write pure <code>R</code> code in scripts, which are files that are executed one line at a time, identical to you typing it into the <code>R</code> console. These files are saved with the suffix <code>.R</code>. These are great for pure data manipulation and coding.</p>
+<p>To create an <code>R</code> Script select <code>File</code><span class="math inline">\to</span><code>New File</code><span class="math inline">\to</span><code>R Script</code>.</p>
+<p><img src="media/R_Script.png" class="img-fluid"></p>
+<p>To execute <code>R</code> code in a script, we can select <code>Source</code> or <code>Run</code> from the button at top of the <code>RStudio</code> editor window (just above the script itself). Or, you can execute the code in a script from another location (e.g., from another script) using the function <code>source()</code> and passing it the path (relative to the document you are using right now) to the script. It will then grab the code from the script and execute it as if it was part of this script.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"path_to/my_cool_script.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is very helpful, particularly if you routinely get raw data that needs some preliminary QA/QC, you can set up a script that will clean it up and call it as necessary.</p>
+<div class="callout-info">
+<p>It is important to think about compartmenatalization of your code. If you ever find yourself typing or (worse yet) copy-and-pasting code you’ve used before into a new analysis—STOP. One of our goals is to write <em>as few lines of code</em> as possible. Errors (logical and grammatical) increase linearly with the number of lines of code you write. The <em>D</em>ont <em>R</em>epeat <em>Y</em>ourself (<em>DRY</em>) principle is key to success in data analytics. Refactor things for reuse will always be benefitical to you in the long run.</p>
+</div>
+<p>One last thing. When you write code in a script, use a lot of comments to explain what you are doing in the code. Here is the syntax of a single line comment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a comment and will not be interpreted by R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>‘Future self’ will thank you when you come back to this file and try to figure out how to use it again.</p>
+</section>
+<section id="quarto-documents" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-documents">Quarto Documents</h2>
+<p>The next kind of file we will be working with are quarto markdown documents. These documents let you mix together the <code>R</code> code (like the scripts), graphical output, tabular output, and the larger narratives around data and analyses you are creating. It is also possible to link the numerical values assocaited with an analysis to in-text values so that if the data change the text changes as well. Figure and table numbering and citations are also updated automatically. It is in your best interest (if your time is important to you) to become proficient in how markdown and <code>R</code> interact.</p>
+<p>The document you are reading right here is a quarto document. These files end in the file suffix <code>.qmd</code>.</p>
+<p>If you have not used markdown before, you need to jump in right now. Here are some resources for you from a Data Literacy course I teach which will help you get up-to-speed on using Markdown in RStudio.</p>
+<ul>
+<li><a href="https://dyerlabteaching.github.io/Markdown/slides.html">Slides</a> describing the rationale for Markdown and how to use it in RStudio where you can mix textual content with data, code, and output.<br>
+</li>
+<li>A longer <a href="https://dyerlabteaching.github.io/Markdown/narrative.html">narrative</a> on the topic that goes into more depth than the slides that includes code and example output.</li>
+<li>A <a href="https://youtu.be/f50Hz92IyIQ">Video</a> on Markdown and Notebooks in RStudio that I made during the COVID lockdown when teaching this course.</li>
+<li>External resources realted to using markdown:
+<ul>
+<li>A basic <a href="https://www.markdownguide.org/cheat-sheet/">Markdown Cheatsheet</a><br>
+</li>
+<li>A site based upon <a href="https://rmarkdown.rstudio.com/">RMarkdown</a> with examples.</li>
+<li>The official documentation for <a href="https://quarto.org/docs/guide/">Quarto</a> (which is the main interface we will be using).</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="data-maniuplation" class="level1">
+<h1>Data Maniuplation</h1>
+<p>If we look at the amount of time we allocate to our data analytics, the vast majority of it is spent on working on the data, manipulating it, getting it into a format that is usable, and a very small fraction of it is spent on running an actual analysis. Usually, by the time we get to the analysis, we are doing a simple function call with our formatted data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">analysis</span>( myData )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I am hoping that you are versed in using <code>tidyverse</code> for data manipulation. This is a constellation of packages that help you take raw data (genotypes, rasters, shapefiles, csv files, etc.) and perform operations on it. Loading in <code>tidyverse</code> is done by calling the library directly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( tidyverse )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>If you are getting a “library not found” for this, install it using the following.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>( <span class="st">"tidyverse"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here is an example of how it can be used to summarize data from the built-in <em>Iris</em> data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( iris )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
+                
+                
+                </code></pre>
+</div>
+</div>
+<p>The following code does the following:<br>
+- outputs the raw data. - creates a new column of data with genus and species. - groups by species. - summarizes by taking the mean values for petal length and width. - saves as a <code>data.frame</code> to a local variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">Plant =</span> <span class="fu">paste</span>( <span class="st">"Iris"</span>,Species)) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>( Plant ) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>( <span class="at">Length =</span> <span class="fu">mean</span>( Petal.Length ), </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">Width =</span> <span class="fu">mean</span>( Petal.Width ) ) <span class="ot">-&gt;</span> iris_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And this is what the output looks like.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>iris_summary </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Plant           Length Width
+  &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt;
+1 Iris setosa       1.46 0.246
+2 Iris versicolor   4.26 1.33 
+3 Iris virginica    5.55 2.03 </code></pre>
+</div>
+</div>
+<p>If you were unsure what the output of the code was going to look like or do not understand what was done, you may need to work a bit on getting up to speed on <code>tidyverse</code>.</p>
+<p>Here are some resources on using <code>tidyverse</code> from a few different sources.</p>
+<ul>
+<li>A <a href="https://youtu.be/dUZyOhVGOjo?si=BvbznIeub7D_cHNX">Video</a> introducing <code>tidyverse</code> given from a distributed workshop on Landscape Genetics.<br>
+</li>
+<li>Updated <a href="https://dyerlabteaching.github.io/Tidyverse/slides.html#/title-slide">Slides</a> of the content. These are updated from the set in the video as they are the ones I used last semseter.<br>
+</li>
+<li>A larger <a href="https://dyerlabteaching.github.io/Tidyverse/narrative.html">narrative</a> going into more depth on the specifics of the topic.<br>
+</li>
+<li>The data set we will use for this is the Rice Rivers Center data set (from 2014). You can see it here as its normal <a href="https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/edit?usp=sharing">Google Sheets</a> or as a <a href="https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/pub?gid=0&amp;single=true&amp;output=csv">CSV</a> file.<br>
+</li>
+<li>A <a href="https://github.com/rstudio/cheatsheets/raw/main/data-transformation.pdf">cheat sheet</a> going over the basic analysis verb functions from <code>dplyr</code>.</li>
+</ul>
+</section>
+<section id="graphics" class="level1">
+<h1>Graphics</h1>
+<p>Part of the <code>tidyverse</code> is the <code>ggplot2</code> library. This is the primary and dominant graphing output for <code>R</code> and will be used throughout this course. You should be familiar with the code sets below (enough to understand what they are doing) and be able to produce basic data graphics.</p>
+<p>A basic scatter plot with groupings and a trend line (<a href="#fig-scatter" class="quarto-xref">Figure&nbsp;1</a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Petal.Width, Petal.Length ) ) <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>( <span class="at">formula =</span> y<span class="sc">~</span>x,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">method=</span><span class="st">"lm"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">col=</span><span class="st">"gray"</span>, </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">lwd=</span><span class="fl">0.5</span>, <span class="at">lty=</span><span class="dv">2</span> ) <span class="sc">+</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="fu">aes</span>( <span class="at">color =</span> Species ) ) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Petal Width (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-scatter" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="in-class_files/figure-html/fig-scatter-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The relationship between petal length and width for three iris species (indicated by alternative colors) with linear trendline (in gray).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A categorical data output using <code>boxplot()</code> (<a href="#fig-boxplot" class="quarto-xref">Figure&nbsp;2</a>) or <code>violin()</code> (<a href="#fig-violin" class="quarto-xref">Figure&nbsp;3</a>) display to compare continuous responses from factors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Species,Petal.Length) ) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch=</span><span class="cn">TRUE</span>) <span class="sc">+</span>  </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Iris species"</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="in-class_files/figure-html/fig-boxplot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A boxplot plot of sepal length for three iris species.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Species,Petal.Length) ) <span class="sc">+</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>( <span class="at">width =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Iris species"</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-violin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-violin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="in-class_files/figure-html/fig-violin-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-violin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: A violin plot of sepal length overlain with individual measurements for three iris species.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A representation of the distribution of variables (<a href="#fig-density" class="quarto-xref">Figure&nbsp;4</a>) across different groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Sepal.Length, <span class="at">fill=</span>Species) ) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">col=</span><span class="st">"darkgray"</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Iris species"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>) <span class="sc">+</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">9</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-density" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="in-class_files/figure-html/fig-density-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Probability density of petal length for three iris species.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>If these methods are new to you, here are some resources that will help.</p>
+<ul>
+<li>Slides for <a href="https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/slides_classic.html">classic plotting</a> and for <a href="https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/slides.html">ggplot2</a> plotting.</li>
+<li>The narrative for both <a href="https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/narrative_classic.html">classic plotting</a> as well as for <a href="https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/narrative.html">ggplot2</a> graphics</li>
+<li><a href="https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/in-class.html">In Class</a> documents.</li>
+<li>External resources:
+<ul>
+<li><a href="https://www.data-to-viz.com">Date to Viz</a>.</li>
+<li><a href="https://r-graph-gallery.com/ggplot2-package.html">R Graph Gallery</a></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf">GGPlot2 Cheatsheet</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="tabular-output" class="level1">
+<h1>Tabular Output</h1>
+<p>The last part of this review will focus on tabular output. Many times, we have data we need to summarize (see above the <code>tidyverse</code> example data that produced a <code>data.frame</code> of mean petal sizes) and would like to create a table in our document that will present the results to the reader (or an ANOVA table or whatever). The most common approach in <code>R</code> is to use the following:</p>
+<div class="cell" data-messages="false">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( knitr )</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( kableExtra )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kableExtra'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    group_rows</code></pre>
+</div>
+</div>
+<p>Here is the data from above:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>iris_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Plant           Length Width
+  &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt;
+1 Iris setosa       1.46 0.246
+2 Iris versicolor   4.26 1.33 
+3 Iris virginica    5.55 2.03 </code></pre>
+</div>
+</div>
+<p>We can make this into a table for publication output as is (<a href="#tbl-iris" class="quarto-xref">Table&nbsp;1</a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>iris_summary <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>) ) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Mean Petal Measurement (mm)"</span><span class="ot">=</span><span class="dv">2</span>) ) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general=</span><span class="st">"N = 50 per species."</span>, <span class="at">footnote_as_chunk =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-iris" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-iris-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Mean dimensions for petals sampled from 50 indiviudals in each iris species.
+</figcaption>
+<div aria-describedby="tbl-iris-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Mean Petal Measurement (mm)
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Plant</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Length</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Width</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Iris setosa</td>
+<td style="text-align: right;">1.462</td>
+<td style="text-align: right;">0.246</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Iris versicolor</td>
+<td style="text-align: right;">4.260</td>
+<td style="text-align: right;">1.326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Iris virginica</td>
+<td style="text-align: right;">5.552</td>
+<td style="text-align: right;">2.026</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0;"><span style="font-style: italic;">Note: </span> <sup></sup> N = 50 per species.</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+</div>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>There is a great webpage for <code>kableExtra</code> that describes a lot of additional functionality for this library <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">here</a>. I recommend you take a look at it.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>So this should be sufficient for what we need in this course. If you have any concerns about your ability to do any of the above, please let me know and we can get to work on helping you get to where you need to be.</p>
+<p>If you have any questions, feel free to drop by my office (LFSC 105c), jump onto my Office Hours Zoom (linked form <a href="https://canvas.vcu.ed">Canvas</a>), or send me an <a href="mailto://rjdyer@vcu.edu">email</a>.</p>
+<ul>
+<li>DrD</li>
+</ul>
+<!-- -->
+
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb27" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "R Ecosystem Review"</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> </span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Rodney J. Dyer</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">    email: rjdyer@vcu.edu</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">    url: https://rodneydyer.com</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">    This activity is a quick overview of what you'll need to bring to the table for this course.  I am going to assume that you've had at least an introductionary course in R with some kind of statistical background. Indivdiual sections of this document will highlight the specific skills you'll need, with a code example, and links to my course in [Data Literacy]()</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: false</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="al">![](media/GeneratedImage.png)</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># The `R` Ecosystem</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>This course will use <span class="in">`R`</span> for model exploration, data analysis, and writing results.  If you do not have <span class="in">`R`</span> on your laptop, please download it from <span class="co">[</span><span class="ot">here</span><span class="co">](https://cran.r-project.org)</span> and install the appropriate version for your platform.</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### R Version</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>:::{.callout-info}</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>I am currently using R version <span class="in">`r paste( version$major, version$minor, sep=".")`</span> for this document.  </span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>To check the version of your <span class="in">`R`</span> instance, type:</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>version</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>If the major version of your install is <span class="in">`r version$major`</span>, you should be fine.  If it is earlier, you should upgrade.  If the first number in the minor version is lower than this, you should also consider upgrading.  The minor "dot version" is not as important.</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Upgrading from a Previous Version</span></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a><span class="in">`R`</span> stores all the libraries in a version-specific folder structure.  *Before* you upgrade, you may want to make a backup of which sets of libraries/packages you have installed already so that when you upgrade, you can automatically reinstall the packages into the new system.  Here is how you'd do that.</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Make a record of the packages you already have installed.  This takes the list of packages you have, pulls out the names of each package and saves it as an R data file (<span class="in">`.rda`</span>) on your Desktop.  After this, you can close R.</span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">names</span>( <span class="fu">is.na</span>(pkgs[,<span class="dv">4</span>]))</span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(pkgs,<span class="at">file=</span><span class="st">'~/Desktop/pkgs.rda'</span>)</span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Download and Install the new version of <span class="in">`R`</span>.  </span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a>If you are on Windows... I'm sorry, I feel for you.  Make sure you install the <span class="in">`UCRT`</span> package that is in the <span class="in">`base`</span> install documents.  There may be other issues that come up, I am not familiar with this platform but in almost all the workshops I lead, there are Windows issues.</span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Find the packages you need to install by comparing it to what you had previously and install them all at once.</span>
+<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>()</span>
+<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> <span class="fu">names</span>( <span class="fu">is.na</span>(new_pkgs[,<span class="dv">4</span>]))</span>
+<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"~/Desktop/pkgs.rda"</span>)</span>
+<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a>to_install <span class="ot">&lt;-</span> <span class="fu">setdiff</span>( pkgs, new_pkgs )</span>
+<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>( to_install )</span>
+<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>( <span class="at">ask=</span><span class="cn">FALSE</span> )</span>
+<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Updating your current set of packages.</span></span>
+<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a>If you just updated <span class="in">`R`</span>, you can skip this section.  If you have not updated your package list in a while, you may want to update any out-of-date packages you may have on your system.  Do this when you are not needing to use <span class="in">`R`</span> for a while, depending upon how much you need to upgrade, it may take a while.</span>
+<span id="cb27-77"><a href="#cb27-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-80"><a href="#cb27-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>( <span class="at">ask=</span><span class="cn">FALSE</span> )</span>
+<span id="cb27-83"><a href="#cb27-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-84"><a href="#cb27-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a>If you do not put the <span class="in">`ask=FALSE`</span> part in there, you'll be tethered to the computer because it will ask your permission to install each package one at a time...  </span>
+<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-88"><a href="#cb27-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## RStudio</span></span>
+<span id="cb27-89"><a href="#cb27-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-90"><a href="#cb27-90" aria-hidden="true" tabindex="-1"></a>I am assuming that you are using <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co)</span> for this course.  If you prefer to use another platform such as <span class="co">[</span><span class="ot">Jupyter Notebooks</span><span class="co">](https://jupyter.org)</span>, <span class="co">[</span><span class="ot">Visual Studio</span><span class="co">](https://code.visualstudio.com)</span>, or other IDE's, you are on your own.  However, this course will require you to produce markdown documents in HTML or DOCX format.</span>
+<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a>If you do not have the most recent version of RStudio, please download it from <span class="co">[</span><span class="ot">here</span><span class="co">](https://posit.co)</span></span>
+<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quarto</span></span>
+<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a>We are going to use <span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org)</span> in this course to make integrate our data analysis, graphical output, report writing.  If you have not used <span class="in">`quarto`</span> before, you will need to download the most recent version.  There is a complete discussion of how to start with Quarto on the website.  Download the version for your compute platform and choose <span class="in">`RStudio`</span> (or whatever IDE) you are using.  It will set you up.</span>
+<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a><span class="fu"># RStudio Projects</span></span>
+<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a><span class="in">`RStudio`</span> has the concept of a *project* for code and data organization.  I *highly recommend* that you use a single project for this course.  This will co-locate all the data, all the code, and all the markdown that you will be given and that you create for this class.  It will also seemlessly handle working directories and all the other crap that befuddles many students.  To make a new package, open up <span class="in">`RStudio`</span> and do the following:</span>
+<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>From the <span class="in">`File`</span> menu, select <span class="in">`New Projct`</span></span>
+<span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a><span class="al">![](media/New_Project_1.png)</span></span>
+<span id="cb27-106"><a href="#cb27-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-107"><a href="#cb27-107" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select <span class="in">`New Directory`</span> from the popup dialog. This will create a new folder to put all your materials into.</span>
+<span id="cb27-108"><a href="#cb27-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-109"><a href="#cb27-109" aria-hidden="true" tabindex="-1"></a><span class="al">![](media/New_Project_2.png)</span></span>
+<span id="cb27-110"><a href="#cb27-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-111"><a href="#cb27-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-112"><a href="#cb27-112" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Select <span class="in">`New Project`</span> for this, we are going to create a generic project to put all the course materials into.</span>
+<span id="cb27-113"><a href="#cb27-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-114"><a href="#cb27-114" aria-hidden="true" tabindex="-1"></a><span class="al">![](media/New_Project_3.png)</span></span>
+<span id="cb27-115"><a href="#cb27-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-116"><a href="#cb27-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-117"><a href="#cb27-117" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Create a name for the folder, perhaps select the name of the class or some other designation that works with your file organization system.  Also, put it somewhere that will be useable (I had a student recently who only put stuff in the <span class="in">`Downloads`</span> folder for some reason...).  </span>
+<span id="cb27-118"><a href="#cb27-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-119"><a href="#cb27-119" aria-hidden="true" tabindex="-1"></a><span class="al">![](media/New_Project_4.png)</span></span>
+<span id="cb27-120"><a href="#cb27-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-121"><a href="#cb27-121" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Select <span class="in">`Create Project`</span>.</span>
+<span id="cb27-122"><a href="#cb27-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-123"><a href="#cb27-123" aria-hidden="true" tabindex="-1"></a>Now, whenever you get a document or data file, *put it in this folder*.  </span>
+<span id="cb27-124"><a href="#cb27-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-125"><a href="#cb27-125" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb27-126"><a href="#cb27-126" aria-hidden="true" tabindex="-1"></a>It is important for me to emphasize this.  When you download a data set or markdown document or R script and simply double click on it, it will most likely be in your Downloads folder.  </span>
+<span id="cb27-127"><a href="#cb27-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-128"><a href="#cb27-128" aria-hidden="true" tabindex="-1"></a>**Move it to the project folder** so it is co-located with all the other stuff for this course.  If you do not, some of the code may not work properly and you'll be hating yourself.  (Dyer's #1 rule, do things now so 'future self' does not hate decisions that 'past self' made...)</span>
+<span id="cb27-129"><a href="#cb27-129" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-130"><a href="#cb27-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-131"><a href="#cb27-131" aria-hidden="true" tabindex="-1"></a>More importantly, when <span class="in">`RStudio`</span> opens, it will default to opening the most recent project (which in all likelihood will be this project).  </span>
+<span id="cb27-132"><a href="#cb27-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-133"><a href="#cb27-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-134"><a href="#cb27-134" aria-hidden="true" tabindex="-1"></a><span class="fu"># Markdown</span></span>
+<span id="cb27-135"><a href="#cb27-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-136"><a href="#cb27-136" aria-hidden="true" tabindex="-1"></a>In <span class="in">`R`</span>, we have two categories of documents that we will be using.  </span>
+<span id="cb27-137"><a href="#cb27-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-138"><a href="#cb27-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## `R` Scripts</span></span>
+<span id="cb27-139"><a href="#cb27-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-140"><a href="#cb27-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-141"><a href="#cb27-141" aria-hidden="true" tabindex="-1"></a>You can write pure <span class="in">`R`</span> code in scripts, which are files that are executed one line at a time, identical to you typing it into the <span class="in">`R`</span> console.  These files are saved with the suffix <span class="in">`.R`</span>.  These are great for pure data manipulation and coding.  </span>
+<span id="cb27-142"><a href="#cb27-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-143"><a href="#cb27-143" aria-hidden="true" tabindex="-1"></a>To create an <span class="in">`R`</span> Script select <span class="in">`File`</span>$\to$<span class="in">`New File`</span>$\to$<span class="in">`R Script`</span>.  </span>
+<span id="cb27-144"><a href="#cb27-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-145"><a href="#cb27-145" aria-hidden="true" tabindex="-1"></a><span class="al">![](media/R_Script.png)</span></span>
+<span id="cb27-146"><a href="#cb27-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-147"><a href="#cb27-147" aria-hidden="true" tabindex="-1"></a>To execute <span class="in">`R`</span> code in a script, we can select <span class="in">`Source`</span> or <span class="in">`Run`</span> from the button at top of the <span class="in">`RStudio`</span> editor window (just above the script itself).  Or, you can execute the code in a script from another location (e.g., from another script) using the function <span class="in">`source()`</span> and passing it the path (relative to the document you are using right now) to the script.  It will then grab the code from the script and execute it as if it was part of this script.  </span>
+<span id="cb27-148"><a href="#cb27-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-151"><a href="#cb27-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-152"><a href="#cb27-152" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb27-153"><a href="#cb27-153" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"path_to/my_cool_script.R"</span>)</span>
+<span id="cb27-154"><a href="#cb27-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-155"><a href="#cb27-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-156"><a href="#cb27-156" aria-hidden="true" tabindex="-1"></a>This is very helpful, particularly if you routinely get raw data that needs some preliminary QA/QC, you can set up a script that will clean it up and call it as necessary.  </span>
+<span id="cb27-157"><a href="#cb27-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-158"><a href="#cb27-158" aria-hidden="true" tabindex="-1"></a>:::{.callout-info}</span>
+<span id="cb27-159"><a href="#cb27-159" aria-hidden="true" tabindex="-1"></a>It is important to think about compartmenatalization of your code.  If you ever find yourself typing or (worse yet) copy-and-pasting code you've used before into a new analysis—STOP.  One of our goals is to write *as few lines of code* as possible.  Errors (logical and grammatical) increase linearly with the number of lines of code you write.  The *D*ont *R*epeat *Y*ourself (*DRY*) principle is key to success in data analytics.  Refactor things for reuse will always be benefitical to you in the long run.</span>
+<span id="cb27-160"><a href="#cb27-160" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-161"><a href="#cb27-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-162"><a href="#cb27-162" aria-hidden="true" tabindex="-1"></a>One last thing.  When you write code in a script, use a lot of comments to explain what you are doing in the code.  Here is the syntax of a single line comment.</span>
+<span id="cb27-163"><a href="#cb27-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-166"><a href="#cb27-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-167"><a href="#cb27-167" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a comment and will not be interpreted by R</span></span>
+<span id="cb27-168"><a href="#cb27-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-169"><a href="#cb27-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-170"><a href="#cb27-170" aria-hidden="true" tabindex="-1"></a>'Future self' will thank you when you come back to this file and try to figure out how to use it again.  </span>
+<span id="cb27-171"><a href="#cb27-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-172"><a href="#cb27-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-173"><a href="#cb27-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-174"><a href="#cb27-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-175"><a href="#cb27-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quarto Documents</span></span>
+<span id="cb27-176"><a href="#cb27-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-177"><a href="#cb27-177" aria-hidden="true" tabindex="-1"></a>The next kind of file we will be working with are quarto markdown documents.  These documents let you mix together the <span class="in">`R`</span> code (like the scripts), graphical output, tabular output, and the larger narratives around data and analyses you are creating.  It is also possible to link the numerical values assocaited with an analysis to in-text values so that if the data change the text changes as well.  Figure and table numbering and citations are also updated automatically.  It is in your best interest (if your time is important to you) to become proficient in how markdown and <span class="in">`R`</span> interact.</span>
+<span id="cb27-178"><a href="#cb27-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-179"><a href="#cb27-179" aria-hidden="true" tabindex="-1"></a>The document you are reading right here is a quarto document.  These files end in the file suffix <span class="in">`.qmd`</span>.  </span>
+<span id="cb27-180"><a href="#cb27-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-181"><a href="#cb27-181" aria-hidden="true" tabindex="-1"></a>If you have not used markdown before, you need to jump in right now.  Here are some resources for you from a Data Literacy course I teach which will help you get up-to-speed on using Markdown in RStudio.  </span>
+<span id="cb27-182"><a href="#cb27-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-183"><a href="#cb27-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Slides</span><span class="co">](https://dyerlabteaching.github.io/Markdown/slides.html)</span> describing the rationale for Markdown and how to use it in RStudio where you can mix textual content with data, code, and output.  </span>
+<span id="cb27-184"><a href="#cb27-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A longer <span class="co">[</span><span class="ot">narrative</span><span class="co">](https://dyerlabteaching.github.io/Markdown/narrative.html)</span> on the topic that goes into more depth than the slides that includes code and example output.</span>
+<span id="cb27-185"><a href="#cb27-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A <span class="co">[</span><span class="ot">Video</span><span class="co">](https://youtu.be/f50Hz92IyIQ)</span> on Markdown and Notebooks in RStudio that I made during the COVID lockdown when teaching this course.</span>
+<span id="cb27-186"><a href="#cb27-186" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>External resources realted to using markdown:  </span>
+<span id="cb27-187"><a href="#cb27-187" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>A basic <span class="co">[</span><span class="ot">Markdown Cheatsheet</span><span class="co">](https://www.markdownguide.org/cheat-sheet/)</span>  </span>
+<span id="cb27-188"><a href="#cb27-188" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>A site based upon <span class="co">[</span><span class="ot">RMarkdown</span><span class="co">](https://rmarkdown.rstudio.com/)</span> with examples.</span>
+<span id="cb27-189"><a href="#cb27-189" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>The official documentation for <span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/docs/guide/)</span> (which is the main interface we will be using).</span>
+<span id="cb27-190"><a href="#cb27-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-191"><a href="#cb27-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-192"><a href="#cb27-192" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Maniuplation</span></span>
+<span id="cb27-193"><a href="#cb27-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-194"><a href="#cb27-194" aria-hidden="true" tabindex="-1"></a>If we look at the amount of time we allocate to our data analytics, the vast majority of it is spent on working on the data, manipulating it, getting it into a format that is usable, and a very small fraction of it is spent on running an actual analysis.  Usually, by the time we get to the analysis, we are doing a simple function call with our formatted data.</span>
+<span id="cb27-195"><a href="#cb27-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-198"><a href="#cb27-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-199"><a href="#cb27-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb27-200"><a href="#cb27-200" aria-hidden="true" tabindex="-1"></a><span class="fu">analysis</span>( myData )</span>
+<span id="cb27-201"><a href="#cb27-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-202"><a href="#cb27-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-203"><a href="#cb27-203" aria-hidden="true" tabindex="-1"></a>I am hoping that you are versed in using <span class="in">`tidyverse`</span> for data manipulation.  This is a constellation of packages that help you take raw data (genotypes, rasters, shapefiles, csv files, etc.) and perform operations on it.  Loading in <span class="in">`tidyverse`</span> is done by calling the library directly.</span>
+<span id="cb27-204"><a href="#cb27-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-207"><a href="#cb27-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-208"><a href="#cb27-208" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( tidyverse )</span>
+<span id="cb27-209"><a href="#cb27-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-210"><a href="#cb27-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-211"><a href="#cb27-211" aria-hidden="true" tabindex="-1"></a>If you are getting a "library not found" for this, install it using the following.</span>
+<span id="cb27-212"><a href="#cb27-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-215"><a href="#cb27-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-216"><a href="#cb27-216" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb27-217"><a href="#cb27-217" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>( <span class="st">"tidyverse"</span> )</span>
+<span id="cb27-218"><a href="#cb27-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-219"><a href="#cb27-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-220"><a href="#cb27-220" aria-hidden="true" tabindex="-1"></a>Here is an example of how it can be used to summarize data from the built-in *Iris* data set.</span>
+<span id="cb27-221"><a href="#cb27-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-224"><a href="#cb27-224" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-225"><a href="#cb27-225" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( iris )</span>
+<span id="cb27-226"><a href="#cb27-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-227"><a href="#cb27-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-228"><a href="#cb27-228" aria-hidden="true" tabindex="-1"></a>The following code does the following:  </span>
+<span id="cb27-229"><a href="#cb27-229" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>outputs the raw data. </span>
+<span id="cb27-230"><a href="#cb27-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>creates a new column of data with genus and species. </span>
+<span id="cb27-231"><a href="#cb27-231" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>groups by species. </span>
+<span id="cb27-232"><a href="#cb27-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>summarizes by taking the mean values for petal length and width. </span>
+<span id="cb27-233"><a href="#cb27-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>saves as a <span class="in">`data.frame`</span> to a local variable.  </span>
+<span id="cb27-234"><a href="#cb27-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-237"><a href="#cb27-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-238"><a href="#cb27-238" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb27-239"><a href="#cb27-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">Plant =</span> <span class="fu">paste</span>( <span class="st">"Iris"</span>,Species)) <span class="sc">|&gt;</span></span>
+<span id="cb27-240"><a href="#cb27-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>( Plant ) <span class="sc">|&gt;</span></span>
+<span id="cb27-241"><a href="#cb27-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>( <span class="at">Length =</span> <span class="fu">mean</span>( Petal.Length ), </span>
+<span id="cb27-242"><a href="#cb27-242" aria-hidden="true" tabindex="-1"></a>             <span class="at">Width =</span> <span class="fu">mean</span>( Petal.Width ) ) <span class="ot">-&gt;</span> iris_summary</span>
+<span id="cb27-243"><a href="#cb27-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-244"><a href="#cb27-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-245"><a href="#cb27-245" aria-hidden="true" tabindex="-1"></a>And this is what the output looks like.</span>
+<span id="cb27-246"><a href="#cb27-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-249"><a href="#cb27-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-250"><a href="#cb27-250" aria-hidden="true" tabindex="-1"></a>iris_summary </span>
+<span id="cb27-251"><a href="#cb27-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-252"><a href="#cb27-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-253"><a href="#cb27-253" aria-hidden="true" tabindex="-1"></a>If you were unsure what the output of the code was going to look like or do not understand what was done, you may need to work a bit on getting up to speed on <span class="in">`tidyverse`</span>.</span>
+<span id="cb27-254"><a href="#cb27-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-255"><a href="#cb27-255" aria-hidden="true" tabindex="-1"></a>Here are some resources on using <span class="in">`tidyverse`</span> from a few different sources.  </span>
+<span id="cb27-256"><a href="#cb27-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-257"><a href="#cb27-257" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>A <span class="co">[</span><span class="ot">Video</span><span class="co">](https://youtu.be/dUZyOhVGOjo?si=BvbznIeub7D_cHNX)</span> introducing <span class="in">`tidyverse`</span> given from a distributed workshop on Landscape Genetics.  </span>
+<span id="cb27-258"><a href="#cb27-258" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>Updated <span class="co">[</span><span class="ot">Slides</span><span class="co">](https://dyerlabteaching.github.io/Tidyverse/slides.html#/title-slide)</span> of the content.  These are updated from the set in the video as they are the ones I used last semseter.  </span>
+<span id="cb27-259"><a href="#cb27-259" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>A larger <span class="co">[</span><span class="ot">narrative</span><span class="co">](https://dyerlabteaching.github.io/Tidyverse/narrative.html)</span> going into more depth on the specifics of the topic.  </span>
+<span id="cb27-260"><a href="#cb27-260" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>The data set we will use for this is the Rice Rivers Center data set (from 2014).  You can see it here as its normal <span class="co">[</span><span class="ot">Google Sheets</span><span class="co">](https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/edit?usp=sharing)</span> or as a <span class="co">[</span><span class="ot">CSV</span><span class="co">](https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/pub?gid=0&amp;single=true&amp;output=csv)</span> file.  </span>
+<span id="cb27-261"><a href="#cb27-261" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>A <span class="co">[</span><span class="ot">cheat sheet</span><span class="co">](https://github.com/rstudio/cheatsheets/raw/main/data-transformation.pdf)</span> going over the basic analysis verb functions from <span class="in">`dplyr`</span>.  </span>
+<span id="cb27-262"><a href="#cb27-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-263"><a href="#cb27-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-264"><a href="#cb27-264" aria-hidden="true" tabindex="-1"></a><span class="fu"># Graphics</span></span>
+<span id="cb27-265"><a href="#cb27-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-266"><a href="#cb27-266" aria-hidden="true" tabindex="-1"></a>Part of the <span class="in">`tidyverse`</span> is the <span class="in">`ggplot2`</span> library.  This is the primary and dominant graphing output for <span class="in">`R`</span> and will be used throughout this course.  You should be familiar with the code sets below (enough to understand what they are doing) and be able to produce basic data graphics.</span>
+<span id="cb27-267"><a href="#cb27-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-270"><a href="#cb27-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-271"><a href="#cb27-271" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false </span></span>
+<span id="cb27-272"><a href="#cb27-272" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>( <span class="fu">theme_minimal</span>() )</span>
+<span id="cb27-273"><a href="#cb27-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-274"><a href="#cb27-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-275"><a href="#cb27-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-276"><a href="#cb27-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-277"><a href="#cb27-277" aria-hidden="true" tabindex="-1"></a>A basic scatter plot with groupings and a trend line (@fig-scatter).</span>
+<span id="cb27-278"><a href="#cb27-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-281"><a href="#cb27-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-282"><a href="#cb27-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-scatter</span></span>
+<span id="cb27-283"><a href="#cb27-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "The relationship between petal length and width for three iris species (indicated by alternative colors) with linear trendline (in gray)."</span></span>
+<span id="cb27-284"><a href="#cb27-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-285"><a href="#cb27-285" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb27-286"><a href="#cb27-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Petal.Width, Petal.Length ) ) <span class="sc">+</span> </span>
+<span id="cb27-287"><a href="#cb27-287" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>( <span class="at">formula =</span> y<span class="sc">~</span>x,</span>
+<span id="cb27-288"><a href="#cb27-288" aria-hidden="true" tabindex="-1"></a>               <span class="at">method=</span><span class="st">"lm"</span>,</span>
+<span id="cb27-289"><a href="#cb27-289" aria-hidden="true" tabindex="-1"></a>               <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">col=</span><span class="st">"gray"</span>, </span>
+<span id="cb27-290"><a href="#cb27-290" aria-hidden="true" tabindex="-1"></a>               <span class="at">lwd=</span><span class="fl">0.5</span>, <span class="at">lty=</span><span class="dv">2</span> ) <span class="sc">+</span> </span>
+<span id="cb27-291"><a href="#cb27-291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="fu">aes</span>( <span class="at">color =</span> Species ) ) <span class="sc">+</span></span>
+<span id="cb27-292"><a href="#cb27-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Petal Width (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb27-293"><a href="#cb27-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>)</span>
+<span id="cb27-294"><a href="#cb27-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-295"><a href="#cb27-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-296"><a href="#cb27-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-297"><a href="#cb27-297" aria-hidden="true" tabindex="-1"></a>A categorical data output using <span class="in">`boxplot()`</span> (@fig-boxplot) or <span class="in">`violin()`</span> (@fig-violin) display to compare continuous responses from factors.</span>
+<span id="cb27-298"><a href="#cb27-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-299"><a href="#cb27-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-302"><a href="#cb27-302" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-303"><a href="#cb27-303" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-boxplot</span></span>
+<span id="cb27-304"><a href="#cb27-304" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A boxplot plot of sepal length for three iris species."</span></span>
+<span id="cb27-305"><a href="#cb27-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-306"><a href="#cb27-306" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb27-307"><a href="#cb27-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Species,Petal.Length) ) <span class="sc">+</span> </span>
+<span id="cb27-308"><a href="#cb27-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch=</span><span class="cn">TRUE</span>) <span class="sc">+</span>  </span>
+<span id="cb27-309"><a href="#cb27-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Iris species"</span>) <span class="sc">+</span></span>
+<span id="cb27-310"><a href="#cb27-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>)</span>
+<span id="cb27-311"><a href="#cb27-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-312"><a href="#cb27-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-313"><a href="#cb27-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-316"><a href="#cb27-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-317"><a href="#cb27-317" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-violin</span></span>
+<span id="cb27-318"><a href="#cb27-318" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A violin plot of sepal length overlain with individual measurements for three iris species."</span></span>
+<span id="cb27-319"><a href="#cb27-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-320"><a href="#cb27-320" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb27-321"><a href="#cb27-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Species,Petal.Length) ) <span class="sc">+</span> </span>
+<span id="cb27-322"><a href="#cb27-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb27-323"><a href="#cb27-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>( <span class="at">width =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb27-324"><a href="#cb27-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Iris species"</span>) <span class="sc">+</span></span>
+<span id="cb27-325"><a href="#cb27-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>)</span>
+<span id="cb27-326"><a href="#cb27-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-327"><a href="#cb27-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-328"><a href="#cb27-328" aria-hidden="true" tabindex="-1"></a>A representation of the distribution of variables (@fig-density) across different groups.</span>
+<span id="cb27-329"><a href="#cb27-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-332"><a href="#cb27-332" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-333"><a href="#cb27-333" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-density</span></span>
+<span id="cb27-334"><a href="#cb27-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Probability density of petal length for three iris species."</span></span>
+<span id="cb27-335"><a href="#cb27-335" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb27-336"><a href="#cb27-336" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(Sepal.Length, <span class="at">fill=</span>Species) ) <span class="sc">+</span> </span>
+<span id="cb27-337"><a href="#cb27-337" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">col=</span><span class="st">"darkgray"</span>) <span class="sc">+</span></span>
+<span id="cb27-338"><a href="#cb27-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Iris species"</span>) <span class="sc">+</span></span>
+<span id="cb27-339"><a href="#cb27-339" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Petal Length (mm)"</span>) <span class="sc">+</span> </span>
+<span id="cb27-340"><a href="#cb27-340" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">9</span>) )</span>
+<span id="cb27-341"><a href="#cb27-341" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-342"><a href="#cb27-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-343"><a href="#cb27-343" aria-hidden="true" tabindex="-1"></a>If these methods are new to you, here are some resources that will help.</span>
+<span id="cb27-344"><a href="#cb27-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-345"><a href="#cb27-345" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>Slides for <span class="co">[</span><span class="ot">classic plotting</span><span class="co">](https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/slides_classic.html)</span> and for <span class="co">[</span><span class="ot">ggplot2</span><span class="co">](https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/slides.html)</span> plotting.</span>
+<span id="cb27-346"><a href="#cb27-346" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>The narrative for both <span class="co">[</span><span class="ot">classic plotting</span><span class="co">](https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/narrative_classic.html)</span> as well as for <span class="co">[</span><span class="ot">ggplot2</span><span class="co">](https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/narrative.html)</span> graphics</span>
+<span id="cb27-347"><a href="#cb27-347" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span><span class="co">[</span><span class="ot">In Class</span><span class="co">](https://dyerlabteaching.github.io/Graphics-That-Do-Not-Suck/in-class.html)</span> documents.</span>
+<span id="cb27-348"><a href="#cb27-348" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>External resources:</span>
+<span id="cb27-349"><a href="#cb27-349" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="co">[</span><span class="ot">Date to Viz</span><span class="co">](https://www.data-to-viz.com)</span>.</span>
+<span id="cb27-350"><a href="#cb27-350" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="co">[</span><span class="ot">R Graph Gallery</span><span class="co">](https://r-graph-gallery.com/ggplot2-package.html)</span></span>
+<span id="cb27-351"><a href="#cb27-351" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="co">[</span><span class="ot">GGPlot2 Cheatsheet</span><span class="co">](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)</span></span>
+<span id="cb27-352"><a href="#cb27-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-353"><a href="#cb27-353" aria-hidden="true" tabindex="-1"></a><span class="fu"># Tabular Output</span></span>
+<span id="cb27-354"><a href="#cb27-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-355"><a href="#cb27-355" aria-hidden="true" tabindex="-1"></a>The last part of this review will focus on tabular output.  Many times, we have data we need to summarize (see above the <span class="in">`tidyverse`</span> example data that produced a <span class="in">`data.frame`</span> of mean petal sizes) and would like to create a table in our document that will present the results to the reader (or an ANOVA table or whatever).  The most common approach in <span class="in">`R`</span> is to use the following:</span>
+<span id="cb27-356"><a href="#cb27-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-359"><a href="#cb27-359" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-360"><a href="#cb27-360" aria-hidden="true" tabindex="-1"></a><span class="co">#| messages: false</span></span>
+<span id="cb27-361"><a href="#cb27-361" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( knitr )</span>
+<span id="cb27-362"><a href="#cb27-362" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( kableExtra )</span>
+<span id="cb27-363"><a href="#cb27-363" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-364"><a href="#cb27-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-365"><a href="#cb27-365" aria-hidden="true" tabindex="-1"></a>Here is the data from above:</span>
+<span id="cb27-366"><a href="#cb27-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-369"><a href="#cb27-369" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-370"><a href="#cb27-370" aria-hidden="true" tabindex="-1"></a>iris_summary</span>
+<span id="cb27-371"><a href="#cb27-371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-372"><a href="#cb27-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-373"><a href="#cb27-373" aria-hidden="true" tabindex="-1"></a>We can make this into a table for publication output as is (@tbl-iris).</span>
+<span id="cb27-374"><a href="#cb27-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-377"><a href="#cb27-377" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-378"><a href="#cb27-378" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-iris</span></span>
+<span id="cb27-379"><a href="#cb27-379" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Mean dimensions for petals sampled from 50 indiviudals in each iris species."</span></span>
+<span id="cb27-380"><a href="#cb27-380" aria-hidden="true" tabindex="-1"></a>iris_summary <span class="sc">|&gt;</span></span>
+<span id="cb27-381"><a href="#cb27-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb27-382"><a href="#cb27-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>) ) <span class="sc">|&gt;</span></span>
+<span id="cb27-383"><a href="#cb27-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Mean Petal Measurement (mm)"</span><span class="ot">=</span><span class="dv">2</span>) ) <span class="sc">|&gt;</span></span>
+<span id="cb27-384"><a href="#cb27-384" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general=</span><span class="st">"N = 50 per species."</span>, <span class="at">footnote_as_chunk =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-385"><a href="#cb27-385" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb27-386"><a href="#cb27-386" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-387"><a href="#cb27-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-388"><a href="#cb27-388" aria-hidden="true" tabindex="-1"></a>There is a great webpage for <span class="in">`kableExtra`</span> that describes a lot of additional functionality for this library <span class="co">[</span><span class="ot">here</span><span class="co">](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)</span>.  I recommend you take a look  at it.</span>
+<span id="cb27-389"><a href="#cb27-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-390"><a href="#cb27-390" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
+<span id="cb27-391"><a href="#cb27-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-392"><a href="#cb27-392" aria-hidden="true" tabindex="-1"></a>So this should be sufficient for what we need in this course.  If you have any concerns about your ability to do any of the above, please let me know and we can get to work on helping you get to where you need to be.</span>
+<span id="cb27-393"><a href="#cb27-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-394"><a href="#cb27-394" aria-hidden="true" tabindex="-1"></a>If you have any questions, feel free to drop by my office (LFSC 105c), jump onto my Office Hours Zoom (linked form <span class="co">[</span><span class="ot">Canvas</span><span class="co">](https://canvas.vcu.ed)</span>), or send me an <span class="co">[</span><span class="ot">email</span><span class="co">](mailto://rjdyer@vcu.edu)</span>.</span>
+<span id="cb27-395"><a href="#cb27-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-396"><a href="#cb27-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>DrD</span>
+<span id="cb27-397"><a href="#cb27-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-398"><a href="#cb27-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-399"><a href="#cb27-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-400"><a href="#cb27-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-401"><a href="#cb27-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-402"><a href="#cb27-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-403"><a href="#cb27-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-404"><a href="#cb27-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-405"><a href="#cb27-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-406"><a href="#cb27-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-407"><a href="#cb27-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-408"><a href="#cb27-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-409"><a href="#cb27-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-410"><a href="#cb27-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-411"><a href="#cb27-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-412"><a href="#cb27-412" aria-hidden="true" tabindex="-1"></a></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

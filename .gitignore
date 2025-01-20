@@ -43,3 +43,5 @@ vignettes/*.pdf
 /.quarto/
 README.html
 README_files/*
+*.key
+*.pdf
